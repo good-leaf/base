@@ -3,7 +3,9 @@
   {vsn, "1.0.0"},
   {modules, []},
   {registered, []},
-  {applications, [kernel, stdlib, observer, runtime_tools, xmerl, sasl, crypto, ssl, inets]},
+  {applications, [kernel, stdlib, observer,
+   runtime_tools, xmerl, sasl, crypto, ssl,
+   inets, eper, lager, recon]},
   {env, []},
   {mod, {base_app, []}}
  ]}.

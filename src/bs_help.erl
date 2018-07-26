@@ -49,3 +49,17 @@ property_help() ->
         "using ~p:fprof_start(N) and print formatted result~n"
         "~p:help() - print this help~n",
         lists:duplicate(17, property)).
+
+recon_help() ->
+    io:format(
+        "recon_trace:calls({Mod, Fun, Args}, Max).~n"
+        "recon_trace:calls({Mod, Fun, Args}, Max, []).~n"
+        "recon_trace:calls({queue, '_', '_'}, 10).监控queue模块所有函数，10条信息~n"
+        "recon_trace:calls({lists, seq, 2}, {100, 1000}).监控lists:seq有2个参数的函数，每秒100条信息~n"
+        "recon_trace:calls({lists, seq, fun([_,_,2]) -> ok end}, 100).监控lists:seq(A,B,2)函数~n"
+        "recon_trace:calls({erlang, iolist_to_binary, fun([X]) when is_binary(X) -> ok end}, 10).~n"
+        "recon_trace:calls({queue, '_', '_'}, {50,1000}, [{pid, Pid}]).每秒50条，进程为Pid的消息~n"
+        "recon_trace:calls([{dict,filter,2},{lists,filter,2}], 10, [{pid, new|all|existing}]).监控新创建的进程~n"
+        "recon_trace:calls({Mod,Fun,fun(_) -> return_trace() end}, Max, [{args,args}]).显示参数、结果~n"
+        "recon_trace:calls({Mod,Fun,[{'_', [], [{return_trace}]}]}, Max, [{args, args}]).显示参数、结果~n"
+    ).
