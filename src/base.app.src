@@ -1,0 +1,9 @@
+{application, base,
+ [{description, "base cmd"},
+  {vsn, "1.0.0"},
+  {modules, []},
+  {registered, []},
+  {applications, [kernel, stdlib, observer, runtime_tools, xmerl, sasl, crypto, ssl, inets]},
+  {env, []},
+  {mod, {base_app, []}}
+ ]}.
