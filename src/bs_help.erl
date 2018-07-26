@@ -52,6 +52,7 @@ property_help() ->
 
 recon_help() ->
     io:format(
+        "文档：http://ferd.github.io/recon/recon.html#proc_count-3~n"
         "recon_trace:calls({Mod, Fun, Args}, Max).~n"
         "recon_trace:calls({Mod, Fun, Args}, Max, []).~n"
         "recon_trace:calls({queue, '_', '_'}, 10).监控queue模块所有函数，10条信息~n"
