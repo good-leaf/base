@@ -15,7 +15,7 @@ lager_trace(Sink, Type, FileName, FileSize, Count, Index) ->
     {ok, Service} = inet:gethostname(),
     AppKey = application:get_env(lager, app_key, "app_key"),
     LogEnv = application:get_env(lager, log_env, "log_env"),
-    FileDir = application:get_env(lager, file_dir, ""),
+    FileDir = application:get_env(lager, file_dir, "./"),
     lager:trace_file(FileDir ++ "/" ++ atom_to_list(FileName) ++ Index ++ ".log",
         [{Type, FileName}, {sink, Sink}], info,
         [
