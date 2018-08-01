@@ -30,11 +30,11 @@ lager_trace(Sink, Type, FileName, FileSize, Count, Index) ->
 hash_log(HashKey, FileName, Format, Val) ->
     log_msg(erlang:phash2(HashKey, 5) + 1, FileName, Format, Val).
 
-log_msg(0, Name, Format, Val) -> log1:info([{log1, Name}], Format, Val);
-log_msg(1, Name, Format, Val) -> log2:info([{log2, Name}], Format, Val);
-log_msg(2, Name, Format, Val) -> log3:info([{log3, Name}], Format, Val);
-log_msg(3, Name, Format, Val) -> log4:info([{log4, Name}], Format, Val);
-log_msg(4, Name, Format, Val) -> log5:info([{log5, Name}], Format, Val).
+log_msg(1, Name, Format, Val) -> log1:info([{log1, Name}], Format, Val);
+log_msg(2, Name, Format, Val) -> log2:info([{log2, Name}], Format, Val);
+log_msg(3, Name, Format, Val) -> log3:info([{log3, Name}], Format, Val);
+log_msg(4, Name, Format, Val) -> log4:info([{log4, Name}], Format, Val);
+log_msg(5, Name, Format, Val) -> log5:info([{log5, Name}], Format, Val).
 
 generate_kv(DataList) ->
     Kv = lists:foldl(fun(T, <<>>) ->
