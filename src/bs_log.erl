@@ -36,6 +36,15 @@ log_msg(3, Name, Format, Val) -> log3:info([{log3, Name}], Format, Val);
 log_msg(4, Name, Format, Val) -> log4:info([{log4, Name}], Format, Val);
 log_msg(5, Name, Format, Val) -> log5:info([{log5, Name}], Format, Val).
 
+format(Level, Format) ->
+    {ok, Host} = inet:gethostname(),
+    AppKey = application:get_env(lager, app_key, "app_key"),
+    LogEnv = application:get_env(lager, log_env, "log_env"),
+
+    Pid = pid_to_list(self()),
+    Host ++ " " ++ AppKey ++ " " ++ "[" ++ Level ++ "]" ++ " " ++ Pid ++ " "
+        ++ LogEnv ++ " " ++ Format.
+
 generate_kv(DataList) ->
     Kv = lists:foldl(fun(T, <<>>) ->
         {K, V} = T,
