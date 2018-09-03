@@ -5,7 +5,7 @@
   {registered, []},
   {applications, [kernel, stdlib, observer,
    runtime_tools, xmerl, sasl, crypto, ssl,
-   inets, eper, lager, recon]},
+   inets, eper, lager, recon, tools]},
   {env, []},
   {mod, {base_app, []}}
  ]}.
