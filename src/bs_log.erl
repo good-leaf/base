@@ -12,7 +12,7 @@ log_trace(FileName) ->
     lager_trace(log5_lager_event, log5, FileName, FileSize, FileNum, "5").
 
 lager_trace(Sink, Type, FileName, FileSize, Count, Index) ->
-    {ok, Service} = inet:gethostname(),
+    %{ok, Service} = inet:gethostname(),
     AppKey = application:get_env(lager, app_key, "app_key"),
     LogEnv = application:get_env(lager, log_env, "log_env"),
     FileDir = application:get_env(lager, file_dir, "./"),
@@ -21,8 +21,7 @@ lager_trace(Sink, Type, FileName, FileSize, Count, Index) ->
         [
             {size, FileSize * 1024 * 1024},
             {count, Count},
-            {formatter_config, [date, " ", time, " ",
-                Service, " ", AppKey, " [info] ",
+            {formatter_config, [date, " ", time, " ", module, ":", function, ":", line, ":", pid, " ", AppKey, " [info] ",
                 atom_to_list(FileName), " ", LogEnv, " ", message, "\n"]
             }
         ]).
