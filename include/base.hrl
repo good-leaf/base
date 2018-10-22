@@ -1,5 +1,6 @@
 %log
 -define(HLOG(HashKey, FileName, Format, Message), bs_log:hash_log(HashKey, FileName, Format, Message)).
+-define(HLOG1(HashKey, FileName, KVL, Format, Message), bs_log:hash_log(HashKey, FileName, KVL, Format, Message)).
 
 -define(LDEBUG(Format), lager:debug(Format)).
 -define(LINFO(Format), lager:info(Format)).

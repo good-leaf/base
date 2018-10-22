@@ -26,13 +26,17 @@ lager_trace(Sink, Type, FileName, FileSize, Count, Index) ->
         ]).
 
 hash_log(HashKey, FileName, Format, Val) ->
-    log_msg(erlang:phash2(HashKey, 5) + 1, FileName, Format, Val).
+    hash_log(HashKey, FileName, <<"hkey=", HashKey/binary>>, Format, Val).
+hash_log(HashKey, FileName, KV, Format, Val) when is_binary(KV) ->
+    log_msg(erlang:phash2(HashKey, 5) + 1, FileName, KV, Format, Val);
+hash_log(HashKey, FileName, KV, Format, Val) when is_list(KV) ->
+    log_msg(erlang:phash2(HashKey, 5) + 1, FileName, gen_kv(KV), Format, Val).
 
-log_msg(1, Name, Format, Val) -> log1:info([{log1, Name}], Format, Val);
-log_msg(2, Name, Format, Val) -> log2:info([{log2, Name}], Format, Val);
-log_msg(3, Name, Format, Val) -> log3:info([{log3, Name}], Format, Val);
-log_msg(4, Name, Format, Val) -> log4:info([{log4, Name}], Format, Val);
-log_msg(5, Name, Format, Val) -> log5:info([{log5, Name}], Format, Val).
+log_msg(1, Name, KV, Format, Val) -> log1:info([{log1, Name}], " #XMDJ#{~s}#XMDJ# " ++ Format, [KV|Val]);
+log_msg(2, Name, KV, Format, Val) -> log2:info([{log2, Name}], " #XMDJ#{~s}#XMDJ# " ++ Format, [KV|Val]);
+log_msg(3, Name, KV, Format, Val) -> log3:info([{log3, Name}], " #XMDJ#{~s}#XMDJ# " ++ Format, [KV|Val]);
+log_msg(4, Name, KV, Format, Val) -> log4:info([{log4, Name}], " #XMDJ#{~s}#XMDJ# " ++ Format, [KV|Val]);
+log_msg(5, Name, KV, Format, Val) -> log5:info([{log5, Name}], " #XMDJ#{~s}#XMDJ# " ++ Format, [KV|Val]).
 
 format(Level, Format) ->
     {ok, Host} = inet:gethostname(),
@@ -42,6 +46,19 @@ format(Level, Format) ->
     Pid = pid_to_list(self()),
     Host ++ " " ++ AppKey ++ " " ++ "[" ++ Level ++ "]" ++ " " ++ Pid ++ " "
         ++ LogEnv ++ " " ++ Format.
+
+gen_kv(DataList) ->
+    lists:foldl(fun(T, <<>>) ->
+        {K, V} = T,
+        BK = to_binary(K),
+        BV = to_binary(V),
+        <<BK/binary, "=", BV/binary>>;
+        (T, Acc) ->
+            {K, V} = T,
+            BK = to_binary(K),
+            BV = to_binary(V),
+            <<Acc/binary, " ", BK/binary, "=", BV/binary>> end, <<>>, DataList).
+
 
 generate_kv(DataList) ->
     Kv = lists:foldl(fun(T, <<>>) ->
