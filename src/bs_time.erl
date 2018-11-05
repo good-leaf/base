@@ -15,6 +15,18 @@ umilltimestamp() ->
     {M, S, MS} = os:timestamp(),
     M * 1000000000000 + S * 1000000 + MS.
 
+seconds() ->
+    erlang:system_time(seconds).
+
+milli_second() ->
+    erlang:system_time(milli_seconds).
+
+micro_seconds() ->
+    erlang:system_time(micro_seconds).
+
+nano_seconds() ->
+    erlang:system_time(nano_seconds).
+
 date_format() ->
     Now = erlang:system_time(micro_seconds),
     BaseDate = calendar:datetime_to_gregorian_seconds({{1970, 1, 1},{0, 0, 0}}),
