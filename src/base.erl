@@ -15,6 +15,8 @@ sequence() ->
 generate_uuid() ->
     Bin = crypto:strong_rand_bytes(12),
     Time = integer_to_binary(bs_time:umilltimestamp()),
-    NewBin = <<Bin/binary, Time/binary>>,
+	{ok, HostName} = inet:gethostname(),
+    HostNameBin = list_to_binary(HostName),
+    NewBin = <<Bin/binary, Time/binary, HostNameBin/binary>>,
     Sig = erlang:md5(NewBin),
     iolist_to_binary([io_lib:format("~2.16.0b", [S]) || S <- binary_to_list(Sig)]).
